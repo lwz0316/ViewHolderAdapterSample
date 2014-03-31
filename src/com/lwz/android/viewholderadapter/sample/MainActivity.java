@@ -24,6 +24,8 @@ public class MainActivity extends ListActivity {
 		initData();
 		createAdapter();
 		setListAdapter(mAdapter);
+		
+		mAdapter.update(mData);
 	}
 
 	private void initData() {
@@ -37,22 +39,22 @@ public class MainActivity extends ListActivity {
 	}
 
 	private void createAdapter() {
-		mAdapter = new LampAdapter(this, mData, R.layout.item_list);
+		mAdapter = new LampAdapter(this, R.layout.item_list);
 	}
 
 
 	class LampAdapter extends ViewHolderAdapter<Lamp> {
 
-		public LampAdapter(Context context, List<Lamp> data, int layoutRes) {
-			super(context, data, layoutRes);
+		public LampAdapter(Context context, int layoutRes) {
+			super(context, layoutRes);
 		}
 
 		@Override
-		protected void bindData(int pos, View convertView, final Lamp itemData) {
+		protected void bindData(int pos, final Lamp itemData) {
 			
 			// get view from ViewHolder	
-			TextView type = getViewFromHolder(convertView, R.id.title);
-			final CheckBox checkBox= getViewFromHolder(convertView, R.id.checkBox);
+			TextView type = getViewFromHolder(R.id.title);
+			final CheckBox checkBox= getViewFromHolder(R.id.checkBox);
 			
 			type.setText(itemData.getType());
 			checkBox.setChecked(itemData.isTurnon());
@@ -71,5 +73,6 @@ public class MainActivity extends ListActivity {
 		private void updateCheckBoxStatus(CheckBox checkBox, boolean isTurnOn) {
 			checkBox.setText( isTurnOn ? "ON" : "OFF" );
 		}
+
 	}
 }
